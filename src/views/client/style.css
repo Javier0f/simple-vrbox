@@ -1,0 +1,10 @@
+:root{
+    color-scheme: dark;
+}
+
+#videoStream{
+    width: 95vw;
+    height: 91vh;
+    min-width: 620px;
+    min-height: 480px;
+}

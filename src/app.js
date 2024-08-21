@@ -33,6 +33,14 @@ function mainWindow(){
             win.webContents.send("startServer", host)
         }
     })
+
+    ipcMain.on("serverLive",() => {
+        if(host){
+            win.webContents.send("serverLive",host);
+            return
+        }
+        win.webContents.send("serverLive",false)
+    })
 }
 
 
