@@ -1,37 +1,60 @@
+*{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: small;
+    user-select: none;
+}
+
 :root{
     color-scheme: dark;
 }
 
 body{
+    /* outline: 1px solid red; */
     overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
 }
 
 #btn_container{
     /* outline: 1px solid red; */
     display: flex;
-    width: fit-content;
+    width:50vw;
+    min-width: 700px;
     height: 30px;
     padding: 2px 0;
+    box-sizing:content-box;
     align-items: stretch;   
 }
 
 #btn_container button{
-    margin-right: 4px;
+    /* outline: 1px solid red; */
+    margin: 0  4px 0 0;
+    padding: 0 0 35px 0;
     user-select: none;
+    align-items: center;
 }
 
 #textarea {
+    /* outline: 1px solid red; */
     pointer-events: none;
     resize: none;
-    width: 200px;
+    min-width: fit-content;
+    padding: 0 10px;
+    margin: 0 5px 0 0;
     display: flex;
+    border-radius: 3px;
     align-items: center;
     user-select: text;
+    background-color: rgba(255, 255, 255, 0.082);
 }
 
 #videoStram{
+    /* outline: 1px solid red; */
+    margin: 0 0 10px 0;
     width: 95vw;
-    height: 91vh;
-    min-width: 620px;
-    min-height: 480px;
+    height: 89vh;
 }

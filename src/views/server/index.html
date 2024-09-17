@@ -8,16 +8,33 @@
 </head>
 <body>
 
-    <video id="videoStram"autoplay controls></video>
+    <video id="videoStram" autoplay></video>
     
     <div id="btn_container">
         <button id="btnCapura">Capturar pantalla</button>
         <button id="btnTransmicion">Transmitír</button>
         <button id="btnServer">Iniciar server</button>
-        <input type="text" name="" id="textarea" disabled>
-        <!-- <textarea name="" id="textarea" ></textarea> -->
+        <div id="textarea"  >servidor apagado</div>
+        
+        <form>
+            <label for="ventanas">Selecciona una ventana</label>
+            <select name="ventanas" id="ventanas" style="width: 100px;">
+                <option value="0" mode="screen">pantalla completa</option>
+            </select>
+        </form>
+
+        <form>
+            <label for="resolucion">resolucion</label>
+            <select name="resolucion" id="resolucion" style="width: 100px;">
+                <option value="1920x1080">1920x1080</option>
+                <option value="1600x900">1600x900</option>
+                <option value="1280x1024">1280x1024</option>
+                <option value="1024x768">1024x768</option>
+                <option value="800x600">800x600</option>
+            </select>
+        </form>
     </div>
     
 </body>
-<script src="./script.js" type="module"></script>
+<script src="./script2.js" type="module"></script>
 </html>

@@ -6,11 +6,8 @@ const btnTransmicion = document.getElementById("btnTransmicion");
 const btnServer = document.getElementById("btnServer");
 const textarea = document.getElementById("textarea");
 
-let url;
-let socket;
-let video;
-
 const pc = new RTCPeerConnection();
+let socket;
 
 async function createOffer(){
     let offer = await pc.createOffer();
@@ -19,10 +16,8 @@ async function createOffer(){
 }
 
 function connectHost(host){
-    url = `http://${host.ip}:${host.port}/`;
-    
-    textarea.value = url;
-    
+    let url = `http://${host.ip}:${host.port}/`;
+
     socket = io(url);
     socket.on("candidate", candidate => {
         pc.addIceCandidate(candidate)
@@ -34,6 +29,7 @@ function connectHost(host){
         location.reload()
     })
 
+    textarea.value = url;
     btnServer.disabled = true;
 }
 
@@ -52,7 +48,7 @@ ipcRenderer.on("serverLive", (e,host) => {
 })
 
 /**
- * Envia una señal al proceso principal para que inici el servidor
+ * Envia una señal al proceso principal para que inicie el servidor
  * luego crea un socket y agrega la direccion del server
  */
 ipcRenderer.on("startServer", (e,host) => {
@@ -66,8 +62,8 @@ pc.onicecandidate = (evnt) => {
 }
 
 btnCapura.onclick = async () => {
-    video = await navigator.mediaDevices.getDisplayMedia({video:true, audio: false});
-    videoStram.srcObject = video;
+    let video = await navigator.mediaDevices.getDisplayMedia({video:true, audio: false});
+
 
     video.getVideoTracks().forEach(track => {
         pc.addTrack(track, video)
@@ -86,3 +82,5 @@ btnServer.onclick = () => {
     ipcRenderer.send("startServer")
 }
 
+btnCapura.click();
+btnServer.click();

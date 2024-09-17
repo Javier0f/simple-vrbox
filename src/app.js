@@ -5,6 +5,17 @@ const {join} = require("path")
 const File = join(__dirname,"views/server/index.html")
 let host;
 
+function selecWindow(arg){
+    session.defaultSession.setDisplayMediaRequestHandler((req, call) => {
+        desktopCapturer.getSources({
+            types:[arg.mode]
+        }).then( sources => {
+            call({video:sources[arg.index], audio:'loopbackWithMute'});
+        })
+
+    })
+}
+
 function mainWindow(){
     const win = new BrowserWindow({
         minWidth: 800,
@@ -17,37 +28,32 @@ function mainWindow(){
     win.loadFile(File)
     win.on('close', app.quit)
 
-    session.defaultSession.setDisplayMediaRequestHandler( async (req, call) => {
-        let sources = await desktopCapturer.getSources({types:["screen"]});
-        call({video:sources[0], audio:"loopbackWithMute"})
+    ipcMain.on("captureScreen",(evnt, index) => {
+        selecWindow(index);
     })
-    
+
+    ipcMain.on("sources", () => {
+        desktopCapturer.getSources({types:['window']})
+        .then(source => {
+            win.webContents.send("sources", source)
+        })
+    })
+
     ipcMain.on("startServer", () => {
         if(!host){
-            startLocalServer()
-            .then(ret => {
-                host = ret;
-                win.webContents.send("startServer", host)
-            });
-        }else{
+            host = startLocalServer()
             win.webContents.send("startServer", host)
+            return
         }
+
+        win.webContents.send("startServer", host)
     })
 
     ipcMain.on("serverLive",() => {
-        if(host){
-            win.webContents.send("serverLive",host);
-            return
-        }
-        win.webContents.send("serverLive",false)
+        host ? win.webContents.send("serverLive", host) : win.webContents.send("serverLive", false)
     })
 }
 
 
 app.whenReady()
 .then(mainWindow);
-
-
-// startLocalServer((state, ip, port) => {
-//     console.log(`server is ${state} on http://${ip}:${port}`)
-// })

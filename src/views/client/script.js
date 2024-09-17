@@ -19,6 +19,7 @@ pc.onconnectionstatechange = state => {
 
 pc.ontrack = track => {
     videoStream.srcObject = track.streams[0]
+    console.log(track.streams)
 }
 
 socket.on("reload", () => {
